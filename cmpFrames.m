@@ -9,13 +9,17 @@
 
 function cmpFrames(strg)
 t = cputime;
-n = 358;
+n = 464;
 der = zeros(1,n);
 for i = 1:n
-frame0 = imread(strcat('DroppedObjects/Seq1/',strg,'/',num2str(i-1),'.png'));
-frame1 = imread(strcat('DroppedObjects/Seq1/',strg,'/',num2str(i),'.png'));
-d(:,:,:) = abs(frame0 - frame1);
-der(1,i) = sum(sum(sum(d)));
+frame0 = imread(strcat('DroppedObjects/Seq2/',strg,'/',num2str(i-1),'.png'));
+frame1 = imread(strcat('DroppedObjects/Seq2/',strg,'/',num2str(i),'.png'));
+normFrame0 = colorMean(frame0);
+normFrame1 = colorMean(frame1);
+
+[m, p] = size(frame0);
+d(:,:,:) = abs(normFrame0 - normFrame1);
+der(1,i) = sum(sum(sum(d)))/(m*p);
 end
 e = cputime - t
 plot([1:n],der);
