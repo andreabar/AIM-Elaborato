@@ -21,7 +21,7 @@ normFrame1 = colorMean(frame1);
 
 frameVector(:, :, :, i) = frame0;
 d(:,:,:) = abs(normFrame0 - normFrame1);
-der(1,i) = sum(sum(sum(d)))/(m*p*k);
+der(i) = sum(sum(sum(d)))/(m*p*k);
 end
 frameVector(:, : , :, n + 1) = frame1;
 % e = cputime - t

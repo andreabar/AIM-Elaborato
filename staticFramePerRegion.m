@@ -5,13 +5,13 @@ region = 1;
 regionFrames = zeros(m, p, k, n, 2);
 regionDer = zeros(n, 2);
 for i = 1 : n-1
-    currentIndex = lowMotionIndex(1, i);
-    nextIndex = lowMotionIndex(1, i + 1);
+    currentIndex = lowMotionIndex(i);
+    nextIndex = lowMotionIndex(i + 1);
     if nextIndex - currentIndex > 30
         count = 1;
         for j = startRegion:i
             regionFrames(:, :, :, count, region) = lowMotionFrames(:, :, :, j);
-            regionDer(count, region) = lowDer(1, j);
+            regionDer(count, region) = lowDer(j);
             count = count + 1;
         end
         for o = count:n
@@ -25,7 +25,7 @@ end
 count = 1;
 for j = startRegion:i+1
     regionFrames(:, :, :, count, region) = lowMotionFrames(:, :, :, j);
-    regionDer(count, region) = lowDer(1, j);
+    regionDer(count, region) = lowDer(j);
     count = count + 1;
 end
 
