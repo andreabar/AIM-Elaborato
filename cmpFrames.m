@@ -7,21 +7,24 @@
 % infine stampa un grafico in cui si vede come varia la differenza tra un frame e l'atro
 
 
-function cmpFrames(strg)
+function [frameVector, der] = cmpFrames(folder, seq, strg, n)
 t = cputime;
-n = 464;
 der = zeros(1,n);
+frame0 = imread(strcat(folder,'/', seq,'/',strg,'/',num2str(0),'.png'));
+[m, p, k] = size(frame0);
+frameVector = zeros(m, p, k, n + 1);
 for i = 1:n
-frame0 = imread(strcat('DroppedObjects/Seq2/',strg,'/',num2str(i-1),'.png'));
-frame1 = imread(strcat('DroppedObjects/Seq2/',strg,'/',num2str(i),'.png'));
+frame0 = imread(strcat(folder,'/', seq,'/',strg,'/',num2str(i-1),'.png'));
+frame1 = imread(strcat(folder,'/', seq,'/',strg,'/',num2str(i),'.png'));
 normFrame0 = colorMean(frame0);
 normFrame1 = colorMean(frame1);
 
-[m, p] = size(frame0);
+frameVector(:, :, :, i) = frame0;
 d(:,:,:) = abs(normFrame0 - normFrame1);
-der(1,i) = sum(sum(sum(d)))/(m*p);
+der(1,i) = sum(sum(sum(d)))/(m*p*k);
 end
-e = cputime - t
-plot([1:n],der);
+frameVector(:, : , :, n + 1) = frame1;
+% e = cputime - t
+plot((1:n),der);
 
 end
