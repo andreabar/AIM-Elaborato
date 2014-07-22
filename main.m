@@ -1,5 +1,5 @@
 clear functions;
-[frameVector, der] = cmpFrames('DroppedObjects', 'Seq2', 'RGB', 464);
+der = cmpFrames('DroppedObjects', 'Seq1', 'RGB', 358);
 threshold = calculateThreshold(der);
-[lowMotionFrames, lowMotionIndex, lowDer] = lowMotionFrames(frameVector, der, threshold);
-regionMinimums = staticFramePerRegion(lowMotionFrames, lowMotionIndex, lowDer);
+lowMotionIndex = lowMotionFrames(der, threshold);
+minimumIndex = getMinimumIndexPerRegion(lowMotionIndex, der);

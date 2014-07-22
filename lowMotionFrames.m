@@ -1,18 +1,15 @@
-function [lowMotionFrames, lowMotionIndex, lowDer] = lowMotionFrames(frameVector, der, threshold)
-[m, p, k, n] = size(frameVector);
+function [lowMotionIndex] = lowMotionFrames(der, threshold)
 count = 1;
-lowMotionFrames = zeros(m,p,k,n);
-for i = 1:n-1
+for i = 1:length(der)
     if der(i) <= threshold
-        lowMotionIndex(count) = i;
+        lowMotionIndex(count) = i + 1;
         count = count + 1;
-        lowMotionFrames(:, :, :, i) = frameVector(:,:,:,i);
     end
 end
-lowDer = zeros(1, count - 1);
-for j = 1:count - 1
-    lowDer(j) = der(lowMotionIndex(j));
-end
+% lowDer = zeros(1, count - 1);
+% for j = 1:count - 1
+%     lowMotionIndex(j)
+% end
 
 end
 
