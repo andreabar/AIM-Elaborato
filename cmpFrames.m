@@ -26,6 +26,6 @@ der(i) = sum(sum(sum(d)))/(m*p*k);
 end
 %frameVector(:, : , :, n + 1) = frame1;
 % e = cputime - t
-plot((1:n),der);
+%plot((1:n),der);
 
 end

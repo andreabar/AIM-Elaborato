@@ -1,4 +1,4 @@
-clear functions;
+clear;
 folderName = 'DroppedObjects';
 sequences = {'Seq1', 'Seq2', 'Seq3'};
 imgType = {'RGB', 'depth'};
@@ -7,4 +7,5 @@ der = cmpFrames(folderName, sequences{1}, imgType{1}, imgNumber(1));
 threshold = calculateThreshold(der);
 lowMotionIndex = lowMotionFrames(der, threshold);
 minimumIndex = getMinimumIndexPerRegion(lowMotionIndex, der);
-[keypointFrames, descriptorsFrames] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
+[keypointVector, descriptorsVector] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
+[strongKeypointVector, strongDescriptorsVector] = extractStrongKeypoint(folderName, sequences{1}, imgType{2}, minimumIndex, keypointVector, descriptorsVector);
