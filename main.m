@@ -1,4 +1,5 @@
-clear functions;
+clear
+t = cputime;
 folderName = 'DroppedObjects';
 sequences = {'Seq1', 'Seq2', 'Seq3'};
 imgType = {'RGB', 'depth'};
@@ -8,3 +9,5 @@ threshold = calculateThreshold(der);
 lowMotionIndex = lowMotionFrames(der, threshold);
 minimumIndex = getMinimumIndexPerRegion(lowMotionIndex, der);
 [keypointFrames, descriptorsFrames] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
+minimumIndex
+e = cputime - t
