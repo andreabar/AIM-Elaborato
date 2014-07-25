@@ -19,12 +19,4 @@ if count > length(minimumIndex)
 end
 
 
-minimumIndex = zeros(1, region);
-
-for l = 1:region
-    minValue = min(regionDer(:, l));
-    minIndex = find(der(:) == minValue);
-    minimumIndex(l) = minIndex;
-end
-
 end
