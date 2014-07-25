@@ -11,3 +11,5 @@ minimumIndex = getMinimumIndexPerRegion(lowMotionIndex, der);
 [keypointFrames, descriptorsFrames] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
 minimumIndex
 e = cputime - t
+[keypointVector, descriptorsVector] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
+[strongKeypointVector, strongDescriptorsVector] = extractStrongKeypoint(folderName, sequences{1}, imgType{2}, minimumIndex, keypointVector, descriptorsVector);

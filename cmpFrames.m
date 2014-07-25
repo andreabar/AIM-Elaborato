@@ -24,6 +24,8 @@ d(:,:,:) = abs(normFrame0 - normFrame1);
 der(i) = sum(sum(sum(d)))/(m*p*k);
 end
 %frameVector(:, : , :, n + 1) = frame1;
-plot((1:n),der);
+
+% e = cputime - t
+%plot((1:n),der);
 
 end
