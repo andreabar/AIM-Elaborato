@@ -29,8 +29,12 @@ end
 end
 
 function isRobust = isLocalGeometryPlane(radius, x, y, z, depthFrame)
-threshold = 10;
+threshold = 50;
 isRobust = 1;
+if z == 0
+    isRobust = 0;
+    return;
+end
 for deltax = 0:radius
     for deltay = 0:radius
         if(deltax + deltay <= radius)
