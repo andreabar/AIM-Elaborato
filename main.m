@@ -1,4 +1,4 @@
-clear;
+clear
 folderName = 'DroppedObjects';
 sequences = {'Seq1', 'Seq2', 'Seq3'};
 imgType = {'RGB', 'depth'};
@@ -45,3 +45,4 @@ for i=1:length(minimumIndex)-1
     title('Mosaic') ;
 
 end
+

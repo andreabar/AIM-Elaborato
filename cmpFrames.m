@@ -8,7 +8,6 @@
 
 
 function der = cmpFrames(folder, seq, strg, n)
-%t = cputime;
 der = zeros(1,n);
 % frame0 = imread(strcat(folder,'/', seq,'/',strg,'/',num2str(0),'.png'));
 % [m, p, k] = size(frame0);
@@ -25,6 +24,7 @@ d(:,:,:) = abs(normFrame0 - normFrame1);
 der(i) = sum(sum(sum(d)))/(m*p*k);
 end
 %frameVector(:, : , :, n + 1) = frame1;
+
 % e = cputime - t
 %plot((1:n),der);
 
