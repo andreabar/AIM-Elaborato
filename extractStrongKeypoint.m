@@ -29,7 +29,7 @@ end
 end
 
 function isRobust = isLocalGeometryPlane(radius, x, y, z, depthFrame)
-threshold = 50;
+threshold = 1;
 isRobust = 1;
 if z == 0
     isRobust = 0;
