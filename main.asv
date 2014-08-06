@@ -11,8 +11,6 @@ imgNumber = [358, 464, 529];
 minimumIndex = [112, 294];
 [keypointVector, descriptorsVector] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
 %clear keypointVector descriptorsVector;
-
-
 im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(2)),'.png'));
 [planarKeyPoints] = getRobustKeypoints(im1,keypointVector);
 %PLOT robustKeypoint
@@ -23,9 +21,6 @@ for k = 1:length(planarKeyPoints)
     plot(planarKeyPoints{1,k}(2,1),planarKeyPoints{1,k}(1,1),'o');
     hold on;
 end
-
-
-
 
 %Ransac l'ho commentato tutto
 % for i=1:length(minimumIndex)-1
