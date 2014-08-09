@@ -16,12 +16,12 @@ clear keypointVector descriptorsVector;
 for i=1:length(minimumIndex)-1
     H = ransacMatching(strongKeypointVector{i}, strongDescriptorsVector{i}, strongKeypointVector{i+1}, strongDescriptorsVector{i+1});
     
-    im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i)),'.png'));
-    im2 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i + 1)),'.png'));
+    im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{1},'/',num2str(minimumIndex(i)),'.png'));
+    im2 = imread(strcat(folderName,'/', sequences{1},'/',imgType{1},'/',num2str(minimumIndex(i + 1)),'.png'));
     
     tform = maketform('projective', H');
     imt = imtransform(im1, tform);
-    imagesc(imt);
+    imshowpair(imt, im2, 'montage');
     
 %     box2 = [1  size(im2,2) size(im2,2)  1 ;
 %         1  1           size(im2,1)  size(im2,1) ;
@@ -50,6 +50,8 @@ for i=1:length(minimumIndex)-1
 %     title('Mosaic') ;
 %     
 %     if nargout == 0, clear mosaic ; end
+    
+    
     
 end
 
