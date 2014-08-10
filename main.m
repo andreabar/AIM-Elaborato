@@ -10,18 +10,46 @@ imgNumber = [358, 464, 529];
 % minimumIndex = getMinimumIndexPerRegion(lowMotionIndex, der);
 minimumIndex = [112, 294];
 [keypointVector, descriptorsVector] = getFrameKeypoint(folderName, sequences{1}, imgType{1}, minimumIndex);
-[strongKeypointVector, strongDescriptorsVector] = extractStrongKeypoint(folderName, sequences{1}, imgType{2}, minimumIndex, keypointVector, descriptorsVector);
-clear keypointVector descriptorsVector;
 
-for i=1:length(minimumIndex)-1
-    H = ransacMatching(strongKeypointVector{i}, strongDescriptorsVector{i}, strongKeypointVector{i+1}, strongDescriptorsVector{i+1});
+
+for i = 1:length(minimumIndex)-1
+    im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i)),'.png'));
+    im2 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i + 1)),'.png'));
+    [planarKeyPoints1, planarDescriptors1] = getRobustKeypoints(im1,keypointVector, descriptorsVector, i);
+    [planarKeyPoints2, planarDescriptors2] = getRobustKeypoints(im2,keypointVector, descriptorsVector, i + 1);
+    [H, X1, X2] = ransacMatching(planarKeyPoints1, planarDescriptors1, planarKeyPoints2, planarDescriptors2);
+    %Per ZUGO: X1aligned e X2 è normale che non abbiano punti esattamente
+    %coincidenti, ci sono alcuni gruppi di punti che sono molto vicini tra
+    %loro, altri sono diversi, ma dobbiamo comunque considerare lo
+    %spostamento dell'immagine, rumore, ecc...
+    X1translated = X1 * H;
+    [R, T] = icp(X2', X1translated');
+    X1aligned = R*X1translated' + repmat(T,1,length(X1translated'));
+    X1aligned = X1aligned';
+    %PLOT robustKeypoint
+%     im1RGB = imread(strcat(folderName,'/', sequences{1},'/',imgType{1},'/',num2str(minimumIndex(2)),'.png'));
+%     imagesc(im1RGB);
+%     hold on;
+%     for k = 1:length(planarKeyPoints)
+%         plot(planarKeyPoints1{1,k}(2,1),planarKeyPoints1{1,k}(1,1),'o');
+%         hold on;
+%     end
     
-    im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{1},'/',num2str(minimumIndex(i)),'.png'));
-    im2 = imread(strcat(folderName,'/', sequences{1},'/',imgType{1},'/',num2str(minimumIndex(i + 1)),'.png'));
-    
-    tform = maketform('projective', H');
-    imt = imtransform(im1, tform);
-    imshowpair(imt, im2, 'montage');
+end
+
+
+
+%Ransac l'ho commentato tutto
+% for i=1:length(minimumIndex)-1
+%     H = ransacMatching(strongKeypointVector{i}, strongDescriptorsVector{i}, strongKeypointVector{i+1}, strongDescriptorsVector{i+1});
+%     
+%     im1 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i)),'.png'));
+%     im2 = imread(strcat(folderName,'/', sequences{1},'/',imgType{2},'/',num2str(minimumIndex(i + 1)),'.png'));
+%     TstrongKeyPoint{i} = H*strongKeypointVector{i};
+%     
+%     tform = maketform('projective', H');
+%     imt = imtransform(im1, tform);
+%     imagesc(imt);
     
 %     box2 = [1  size(im2,2) size(im2,2)  1 ;
 %         1  1           size(im2,1)  size(im2,1) ;
@@ -51,9 +79,13 @@ for i=1:length(minimumIndex)-1
 %     
 %     if nargout == 0, clear mosaic ; end
     
-    
-    
-end
+
+%end
+
+% imshow(im1);
+% hold on;
+% plot(TstrongKeyPoint);
+
 
 
 
