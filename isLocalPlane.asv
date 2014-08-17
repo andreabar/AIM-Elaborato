@@ -25,7 +25,7 @@ function isFlat = isLocalPlane(keypoint,im)
        for j = lowIntervaly : uppIntervaly
            x_y_coords = R*[i,j,1]' + T;
             if (x_y_coords(1) >= 1) && (x_y_coords(2) >= 1)
-               b(count) = avgDepth(round(x_y_coords(2)),round(x_y_coords(1)),im); %im(i,j) è la z_i
+               b(count) = im(round(x_y_coords(2)),round(x_y_coords(1))); %im(i,j) è la z_i
                A(count,1) = x_y_coords(1);
                A(count,2) = x_y_coords(2);           
                count = count + 1;
@@ -58,11 +58,7 @@ end
 
 
 function [avg_z] = avgDepth(x,y,img)
- resto_x = x - floor(x);
- resto_y = y - floor(y);
- 
- avg_z = (((1 - resto_x) + (1 - resto_y))*img(floor(x),floor(y))) + ((resto_x + resto_y)*img(ceil(x),ceil(y))) ;
- avg_z = avg_z/2;
+ avg_z = im(floor())   
 
 
 end
